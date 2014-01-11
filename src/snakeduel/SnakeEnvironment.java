@@ -7,6 +7,7 @@ package snakeduel;
 import environment.Environment;
 import environment.Grid;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -19,7 +20,11 @@ import java.awt.event.MouseEvent;
 class SnakeEnvironment extends Environment {
     private Snake snake;
     private Grid grid;
-
+    private String score;
+    
+    private int speed = 5;
+    private int moveCounter = speed;
+    
     public SnakeEnvironment() {
     }
 
@@ -31,18 +36,43 @@ class SnakeEnvironment extends Environment {
         snake.getBody().add(new Point(3, 5));
         
         grid = new Grid();
-        // change grid stuff here...
+        this.grid.setColor(Color.BLUE);
+        this.grid.setColumns(44);
+        this.grid.setRows(15);
+        this.grid.setCellHeight(20);
+        this.grid.setCellWidth(20);
+        this.grid.setPosition(new Point(10, 100));
+        
         
     }
 
     @Override
     public void timerTaskHandler() {
-    
+        System.out.println("Timer");
+        if (snake != null){
+            if (moveCounter <= 0){
+                snake.move();
+                moveCounter = speed;
+            } else {
+                moveCounter--;  
+            }
+               
+        }
     }
 
     @Override
     public void keyPressedHandler(KeyEvent e) {
-    
+        if (e.getKeyCode() == KeyEvent.VK_SPACE){
+           this.score += 57;
+        } else if (e.getKeyCode() == KeyEvent.VK_W){
+            snake.move();
+        } else if (e.getKeyCode() == KeyEvent.VK_A){
+            snake.move();
+        } else if (e.getKeyCode() == KeyEvent.VK_S){
+            snake.move();
+        } else if (e.getKeyCode() == KeyEvent.VK_D){
+            snake.move();
+        }
     }
 
     @Override
@@ -65,11 +95,14 @@ class SnakeEnvironment extends Environment {
                 Point cellLocation;
                 for (int i = 0; i < snake.getBody().size(); i++) {
                     cellLocation = grid.getCellPosition(snake.getBody().get(i));
-                    graphics.fillRect(cellLocation.x, cellLocation.y, grid.getCellWidth(), grid.getCellHeight());
+                    graphics.fillOval(cellLocation.x, cellLocation.y, grid.getCellWidth(), grid.getCellHeight());
                 }
             }
         }
-    
+    graphics.setColor(Color.BLACK);
+    graphics.setFont(new Font("CenturyGothic", Font.BOLD, 60));
+    graphics.drawString("Score: " + this.score, 50, 50); 
+ 
     }
-    
+      
 }
