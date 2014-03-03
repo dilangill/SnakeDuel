@@ -28,7 +28,7 @@ public class Snake {
        
        switch (getDirection()){
            case UP:
-               x = 0;
+               x = 0; 
                y = -1;
                break;
                
@@ -56,7 +56,7 @@ public class Snake {
     }
     
     public Point getHead(){
-        return getBody().get(0);
+        return body.get(0);
     }
 
     /**
@@ -87,6 +87,24 @@ public class Snake {
         this.direction = direction;
     }
     
+    public Point getTail() {
+        return body.get(body.size() - 1);
+    }
     
+    public boolean selfHitTest(){
+        for (int i = 0; i < body.size(); i++) { 
+            if (body.get(i).equals( getHead() )) {
+                return true;   
+        }
+        }
+        return false;
+        
+    }
+
+    void addGrowthcounter(int moveCounter) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
+    
+
